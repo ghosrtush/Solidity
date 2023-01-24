@@ -15,12 +15,32 @@ contract SimpleStorage {
     // Can be public,private, external, internal
     uint256 public favouriteNumber;
 
+    mapping(string => uint256) public nameToFavouriteNumbber;
+
+    People public person = People({favouriteNumber:2, name: 
+    "Nick"});
+
+
+    // struct is similar to an object
+    struct People {
+        uint256 favouriteNumber;
+        string name;
+    }
+    // uint256[] public favouriteNumbersList;
+    People[] public people;
+
     function store(uint256 _favouriteNumber) public {
         favouriteNumber = _favouriteNumber;
     }
 
     function retrieve() public view returns(uint256) {
         return favouriteNumber;
+    }
+
+    // variable stored in memory only exist temporarily during the transaction, can't be accessed outside the fucntion
+    function addPerson(string memory _name, uint256 _favouriteNumber) public {
+        people.push(People(_favouriteNumber, _name));
+        nameToFavouriteNumbber[_name] = _favouriteNumber;
     }
 
 
